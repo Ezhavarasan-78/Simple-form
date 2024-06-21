@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .error {
+            color: red;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="post">
+         {% csrf_token %}
+         <h1>Simple Form</h1>
+         <label>Username :</label>
+         <input type="text" id="username" name="username" required>
+         <br>
+         <label>Firstname :</label>
+         <input type="text" id="firstname" name="firstname" required>
+         <br>
+         <label> lastname :</label>
+         <input type="text" id="lastname" name="lastname" required>
+         <br>
+         <label>mail Id :</label>
+         <input type="email" id="email" name="email" required>
+         <br>
+         <label>Password :</label>
+         <input type="password" id="password" name="password" required>
+         <br>
+         <button onclick=" return validateform()">Submit</button>
+        </form>
+     </div>
+     <script>
+      function validateform()
+       {
+         const username = document.getElementById('username').value;
+         const firstname = document.getElementById('firstname').value;
+         const lastname = document.getElementById('lastname').value;
+         const email = document.getElementById('email').value;
+         const phone = document.getElementById('phone').value;
+         const password = document.getElementById('password').value;
+       
+         const errorMessages = document.getElementById('errorMessages');
+         if (errorMessages) {
+           errorMessages.innerHTML = '';
+         }
+       
+         const errors = [];
+       
+ 
+         if (!username.trim()) {
+           errors.push('Username is required.');
+         }
+       
+     
+         if (!firstname.trim()) {
+           errors.push('Firstname is required.');
+         }
+       
+ 
+         if (!lastname.trim()) {
+           errors.push('Lastname is required.');
+         }
+       
+         if (!isEmailValid(email)) {
+           errors.push('Invalid email format.');
+         }
+        
+      
+         if (password.length < 8) {
+           errors.push('Password must be at least 8 characters long.');
+         }
+       
+         if (errors.length > 0) {
+           let errorMessage = 'Please fix the following errors:\n';
+           errorMessage += errors.join('\n');
+       
+           const errorElement = document.createElement('div');
+           errorElement.id = 'errorMessages';
+           errorElement.style.color = 'red';
+           errorElement.textContent = errorMessage;
+           form.insertBefore(errorElement, form.firstChild); 
+       
+           return false; 
+         }
+       
+         return true;
+       }
+       
+       function isEmailValid(email) {
+         const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+         return emailRegex.test(email);
+       }
+ 
+     </script>
+</body>
+</html>
